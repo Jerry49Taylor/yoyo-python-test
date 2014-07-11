@@ -33,7 +33,8 @@ It is expected that you:
 - provide basic api documentation in the project
 
 ##Afterwards
-When complete, send us the url of the Heroku application and 
+When complete, send us the urls of the Heroku application and git repository.
+
 ##Getting Started
 
 We have provided an empty django project. Feel free to either use this or create your own. If you are going to use this then __please do the following__:
