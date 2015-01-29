@@ -24,7 +24,6 @@ Create a set of REST APIs that:
 - add stamps to a customer
 - add vouchers to a customer
 - mark a voucher as redeemed
-- __*BONUS: return a customers transaction history (purchases, stamps, vouchers)*__
 
 ## What We Expect
 
@@ -35,7 +34,7 @@ It is expected that you:
 - write unit tests
 - commit often
 - deploy on Heroku 
-- provide basic api documentation in the project
+- provide api documentation in the project
 
 ## Afterwards
 
@@ -50,6 +49,8 @@ your own. If you are going to use this then __please do the following__:
 - remove the (justyoyo) git origin
 - create your own repository in either GitHub or BitBucket and set that as the new origin
 
-For help on using heroku, check out [Getting Started](https://devcenter.heroku.com/articles/getting-started-with-django)
+## Get Creative
 
-__*BONUS: If you want to show us more, build an additional feature that extends the loyalty programme further.*__
+Add some useful additional feature. Show us something we haven't seen!
+
+Have fun!
