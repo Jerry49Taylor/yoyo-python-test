@@ -1,0 +1,14 @@
+[{"fields": {"first_name": "John", "last_name": "Lennon"}, "model": "shop.customer", "pk": 1}, 
+{"fields": {"first_name": "John", "last_name": "Lennon"}, "model": "shop.customer", "pk": 2}, 
+{"fields": {"sku": "gizmo", "stamps_earned": 0}, "model": "shop.product", "pk": 1}, 
+{"fields": {"sku": "widget", "stamps_earned": 1}, "model": "shop.product", "pk": 2}, 
+{"fields": {"customer": 1, "date_created": "2015-02-03T10:22:02.801Z"}, "model": "shop.transaction", "pk": 1}, 
+{"fields": {"customer": 2, "date_created": "2015-02-03T11:22:11.426Z"}, "model": "shop.transaction", "pk": 2}, 
+{"fields": {"customer": 1, "date_created": "2015-02-05T13:12:11.426Z"}, "model": "shop.transaction", "pk": 3}, 
+{"fields": {"product": 1, "transaction": 1, "quantity": 5}, "model": "shop.transactionline", "pk": 1},
+{"fields": {"product": 2, "transaction": 1, "quantity": 6}, "model": "shop.transactionline", "pk": 2},
+{"fields": {"product": 1, "transaction": 2, "quantity": 1}, "model": "shop.transactionline", "pk": 3},
+{"fields": {"product": 2, "transaction": 2, "quantity": 1}, "model": "shop.transactionline", "pk": 4},
+{"fields": {"product": 1, "transaction": 3, "quantity": 6}, "model": "shop.transactionline", "pk": 5},
+{"fields": {"product": 2, "transaction": 3, "quantity": 6}, "model": "shop.transactionline", "pk": 6}
+]

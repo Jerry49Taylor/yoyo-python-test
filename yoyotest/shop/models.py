@@ -7,11 +7,17 @@ from immutablefield.models import ImmutableModel
 
 # Create your models here.
 class Customer(models.Model):
-    user = models.OneToOneField(User)
     
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+
     @property
     def balance(self):
         return Stamp.objects.filter(transaction_line__transaction__customer=self, voucher__isnull=True).count()
+
+    @property
+    def unredeemed_vouchers(self):
+        return Voucher.objects.filter(transaction_line__transaction__customer=self, date_redeemed__isnull=True).count()
 
 
 class Voucher(ImmutableModel):
@@ -86,7 +92,7 @@ def transaction_stamp_handler(sender, instance, created, **kwargs):
         stamps_to_create = instance.quantity * instance.product.stamps_earned
         while(stamps_to_create > 0):
             Stamp.objects.create(transaction_line=instance)
-            stamps_to_redeem = Stamp.objects.filter(transaction_line__transaction__customer=instance.transaction.customer).order_by('date_created')[:10]
+            stamps_to_redeem = Stamp.objects.filter(transaction_line__transaction__customer=instance.transaction.customer, voucher__isnull=True).order_by('date_created')[:10]
             if len(stamps_to_redeem) == 10:
                 voucher = Voucher.objects.create(customer=instance.transaction.customer)
                 for stamp in stamps_to_redeem:

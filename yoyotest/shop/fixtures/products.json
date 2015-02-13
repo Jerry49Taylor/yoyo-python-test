@@ -1,0 +1,4 @@
+[
+{"fields": {"sku": "gizmo", "stamps_earned": 0}, "model": "shop.product", "pk": 1}, 
+{"fields": {"sku": "widget", "stamps_earned": 1}, "model": "shop.product", "pk": 2}
+]
