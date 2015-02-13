@@ -37,6 +37,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
+                ('customer', models.ForeignKey(to='shop.Customer')),
             ],
             options={
                 'abstract': False,
@@ -84,7 +85,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='stamp',
             name='transaction_line',
-            field=models.ForeignKey(to='shop.TransactionLine'),
+            field=models.ForeignKey(to='shop.TransactionLine', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

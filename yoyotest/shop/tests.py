@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 
-from models import Customer, Product, Voucher, Stamp, Transaction, TransactionLine
+from models import Customer, Product, Stamp, Transaction, TransactionLine, Voucher
 
 
 class TestTransaction(TestCase):
@@ -48,21 +48,33 @@ class TestStamps(TestCase):
         c1 = Customer.objects.get(pk=1)
         self.assertEqual(2, c1.balance)
 
-    def add_stamps_to_a_customer(self):
-        pass
+    def test_add_stamps_to_a_customer(self):
+        c2 = Customer.objects.get(pk=2)
+        before = c2.balance
+        Stamp.objects.create(customer=c2)
+        self.assertEqual(1, c2.balance-before)
 
 
 class TestVouchers(TestCase):
 
     fixtures = ['transactions.json']
 
-    def show_how_many_vouchers_a_customer_has(self):
+    def test_show_how_many_vouchers_a_customer_has(self):
         c1 = Customer.objects.get(pk=1)
-        self.assertEqual(2, c1.unredeemed_vouchers)
-        pass
+        self.assertEqual(1, c1.unredeemed_vouchers)
 
-    def add_vouchers_to_a_customer(self):
-        pass
+    def test_add_vouchers_to_a_customer(self):
+        c1 = Customer.objects.get(pk=1)
+        before = c1.unredeemed_vouchers
+        Voucher.objects.create(customer=c1)
+        self.assertEqual(1, c1.unredeemed_vouchers-before)
 
-    def mark_a_voucher_as_redeemed(self):
-        pass
+    def test_mark_a_voucher_as_redeemed(self):
+        c1 = Customer.objects.get(pk=1)
+        before = c1.unredeemed_vouchers
+        self.assertTrue(c1.redeem_voucher())
+        self.assertEqual(1, before-c1.unredeemed_vouchers)
+
+    def test_no_voucher_to_redeem(self):
+        c2 = Customer.objects.get(pk=2)
+        self.assertFalse(c2.redeem_voucher())
