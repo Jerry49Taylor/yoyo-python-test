@@ -32,7 +32,9 @@ class Customer(models.Model):
 
 class Voucher(ImmutableModel):
     """
+    Voucher is owned by Customer
     Vouchers can only be redeemed once but are transferable
+    Can be given to a customer (no stamps) or earned with stamps
     """
     customer = models.ForeignKey(Customer, null=False)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -81,6 +83,7 @@ class TransactionLine(ImmutableModel):
 
 class Stamp(ImmutableModel):
     """
+    Stamp is owned by Customer
     Stamps may be earned by a transaction line and assigned to voucher once
     Stamps may be given to a customer without a purchase
     Stamps may be transferred between customers
@@ -95,20 +98,27 @@ class Stamp(ImmutableModel):
         quiet = False
 
 
-@receiver(post_save, sender=TransactionLine)
-def transaction_stamp_handler(sender, instance, created, **kwargs):
+@receiver(post_save, sender=Stamp)
+def stamp_handler(sender, instance, created, **kwargs):
     """
-    This signal automatically adds stamps and creates vouchers
+    This signal automatically turns stamps into vouchers when a stamp is created
+    """
+    if created:
+        stamps_to_redeem = Stamp.objects.filter(customer=instance.customer, voucher__isnull=True).order_by('date_created')[:10]
+        if len(stamps_to_redeem) == 10:
+            voucher = Voucher.objects.create(customer=instance.customer)
+            for stamp in stamps_to_redeem:
+                stamp.voucher = voucher
+                stamp.save()
+
+@receiver(post_save, sender=TransactionLine)
+def transactionline_handler(sender, instance, created, **kwargs):
+    """
+    This signal automatically adds stamps when a transaction line is created
     Its not what was aksed for in the spec but I thought this made the exercise more interesting
     """
     if created:
         stamps_to_create = instance.quantity * instance.product.stamps_earned
         while(stamps_to_create > 0):
             Stamp.objects.create(transaction_line=instance, customer=instance.transaction.customer)
-            stamps_to_redeem = Stamp.objects.filter(customer=instance.transaction.customer, voucher__isnull=True).order_by('date_created')[:10]
-            if len(stamps_to_redeem) == 10:
-                voucher = Voucher.objects.create(customer=instance.transaction.customer)
-                for stamp in stamps_to_redeem:
-                    stamp.voucher = voucher
-                    stamp.save()
             stamps_to_create -= 1

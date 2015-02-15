@@ -33,11 +33,12 @@ class TestTransaction(TestCase):
         """
         Create a simple transaction that earns a voucher
         """
+        before = Voucher.objects.filter(customer=self.customer).count()
         transaction = Transaction.objects.create(customer=self.customer)
         TransactionLine.objects.create(transaction=transaction, product=self.widget, quantity=10)
         self.assertEqual(10, Stamp.objects.filter(transaction_line__transaction__customer=self.customer, voucher__isnull=False).count())
         self.assertEqual(0, self.customer.balance)
-        self.assertEqual(1, Voucher.objects.filter(customer=self.customer).count())
+        self.assertEqual(1, Voucher.objects.filter(customer=self.customer).count()-before)
 
 
 class TestStamps(TestCase):
@@ -53,6 +54,16 @@ class TestStamps(TestCase):
         before = c2.balance
         Stamp.objects.create(customer=c2)
         self.assertEqual(1, c2.balance-before)
+
+    def test_add_10_stamps_creates_voucher(self):
+        """
+        Give a customer 10 stamps creates a voucher
+        """
+        c1 = Customer.objects.get(pk=1)
+        before = Voucher.objects.filter(customer=c1).count()
+        for x in range(0,10):
+            Stamp.objects.create(customer=c1)
+        self.assertEqual(1, Voucher.objects.filter(customer=c1).count()-before)
 
 
 class TestVouchers(TestCase):
