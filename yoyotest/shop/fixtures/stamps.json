@@ -1,0 +1,5 @@
+[
+    {"fields": {"customer": 1, "date_created": "2015-02-15T22:54:48.013Z", "transaction_line": null, "voucher": null}, "model": "shop.stamp", "pk": 1}, 
+    {"fields": {"customer": 1, "date_created": "2015-02-15T22:54:51.813Z", "transaction_line": null, "voucher": null}, "model": "shop.stamp", "pk": 2}, 
+    {"fields": {"customer": 1, "date_created": "2015-02-15T22:54:52.713Z", "transaction_line": null, "voucher": null}, "model": "shop.stamp", "pk": 3}
+]

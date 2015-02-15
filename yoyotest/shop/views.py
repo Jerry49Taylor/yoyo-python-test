@@ -17,7 +17,7 @@ def success(**kwargs):
 
 @require_POST
 @login_required
-def create_transaction(self, request, customer_id):
+def create_transaction(request, customer_id):
     """
     POST /create_transaction/<customer_id>/
     data = JSON "lines": ["product_id":<product_id>, "quantity":<int>, "product_id":<product_id>, "quantity":<int>, ...]}
@@ -34,7 +34,7 @@ def create_transaction(self, request, customer_id):
 
 @require_GET
 @login_required
-def get_stamp_count(self, request, customer_id):
+def get_stamp_count(request, customer_id):
     """
     GET /get_stamp_count/<customer_id>/
     Returns the balance of unused stamps for the customer_id returns JSON {"success": "True", count:"1"}
@@ -44,7 +44,7 @@ def get_stamp_count(self, request, customer_id):
 
 @require_GET
 @login_required
-def get_voucher_count(self, request, customer_id):
+def get_voucher_count(request, customer_id):
     """
     GET /get_voucher_count/<customer_id>/
     Returns the balance of unredeemed vouchers for the customer_id returns JSON {"success": "True", count:"1"}
@@ -54,7 +54,7 @@ def get_voucher_count(self, request, customer_id):
 
 @require_POST
 @login_required
-def add_stamps(self, request, customer_id, stamps):
+def add_stamps(request, customer_id, stamps):
     """
     POST /add_stamps/<customer_id>/<int>
     Adds int stamps and returns the balance of unused stamps for the customer_id returns JSON {"success": "True", count:"4"}
@@ -68,7 +68,7 @@ def add_stamps(self, request, customer_id, stamps):
 
 @require_POST
 @login_required
-def add_vouchers(self, request, customer_id, vouchers):
+def add_vouchers(request, customer_id, vouchers):
     """
     POST /add_vouchers/<customer_id>/<int>
     Adds int vouchers and returns the balance of unredeemed vouchers for the customer_id returns JSON {"success": "True", count:"4"}
@@ -80,7 +80,7 @@ def add_vouchers(self, request, customer_id, vouchers):
 
 @require_POST
 @login_required
-def redeem_voucher(self, request, customer_id):
+def redeem_voucher(request, customer_id):
     """
     POST /redeem_voucher/<customer_id>
     Redeems oldest unredeemed vouchers for the customer_id returns JSON {"success": "True"}
