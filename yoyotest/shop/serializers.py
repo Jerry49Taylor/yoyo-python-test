@@ -24,9 +24,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    transactionlines = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    
     class Meta:
         model = Transaction
-        fields = ('id', 'customer', 'date_created')
+        fields = ('id', 'customer', 'date_created', 'transactionlines')
         read_only_fields = ('customer', 'date_created')
 
 

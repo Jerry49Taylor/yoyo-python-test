@@ -72,13 +72,16 @@ class TransactionLine(ImmutableModel):
     Immutable Each line on a transaction with unit and quantity
     Ignoring tax etc
     """
-    transaction = models.ForeignKey(Transaction, null=False)
+    transaction = models.ForeignKey(Transaction, null=False, related_name='lines')
     product = models.ForeignKey(Product, null=False)
     quantity = models.IntegerField(null=False)
 
     class ImmutableMeta:
         immutable = ['transaction', 'product', 'quantity']
         quiet = False  
+
+    def __unicode__(self):
+        return '%d: %s' % (self.quantity, self.product.sku)
 
 
 class Stamp(ImmutableModel):

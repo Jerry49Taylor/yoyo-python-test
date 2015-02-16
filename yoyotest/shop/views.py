@@ -44,7 +44,7 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class TransactionList(generics.ListCreateAPIView):
     """
-    List all Transaction or Create a new Product
+    List all Transaction or Create a new Transaction
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
@@ -55,6 +55,22 @@ class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
     Read, Update or Delete a Transaction instance
     """
     queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+
+class TransactionLineList(generics.ListCreateAPIView):
+    """
+    List all Transaction or Create a new TransactionLine
+    """
+    queryset = TransactionLine.objects.all()
+    serializer_class = TransactionSerializer
+
+
+class TransactionLineDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Read, Update or Delete a TransactionLine instance
+    """
+    queryset = TransactionLine.objects.all()
     serializer_class = TransactionSerializer
 
 
