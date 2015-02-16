@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from views import CustomerDetail, CustomerList, ProductDetail, ProductList, TransactionDetail, TransactionList, TransactionLineDetail, TransactionLineList
+from views import CustomerDetail, CustomerList, ProductDetail, ProductList, TransactionDetail, TransactionList, TransactionLineDetail, TransactionLineList, VoucherDetail, VoucherList
 
 
 urlpatterns = [
@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^transactions/(?P<pk>[0-9]+)/$', TransactionDetail.as_view()),
     url(r'^transactionlines/$', TransactionLineList.as_view()),
     url(r'^transactionlines/(?P<pk>[0-9]+)/$', TransactionLineDetail.as_view()),
+    url(r'^vouchers/$', VoucherList.as_view()),
+    url(r'^vouchers/(?P<pk>[0-9]+)/$', VoucherDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

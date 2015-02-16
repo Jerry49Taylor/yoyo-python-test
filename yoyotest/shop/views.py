@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_GET
 
 from models import Customer, Product, Transaction, TransactionLine, Stamp, Voucher
-from serializers import CustomerSerializer, ProductSerializer, TransactionSerializer, TransactionLineSerializer
+from serializers import CustomerSerializer, ProductSerializer, TransactionSerializer, TransactionLineSerializer, VoucherSerializer
 from rest_framework import generics
 
 
@@ -72,6 +72,22 @@ class TransactionLineDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = TransactionLine.objects.all()
     serializer_class = TransactionLineSerializer
+
+
+class VoucherList(generics.ListCreateAPIView):
+    """
+    List all Vouchers or Create a new Voucher
+    """
+    queryset = Voucher.objects.all()
+    serializer_class = VoucherSerializer
+
+
+class VoucherDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Read, Update or Delete a Voucher instance
+    """
+    queryset = Voucher.objects.all()
+    serializer_class = VoucherSerializer
 
 
 # Create your views here.

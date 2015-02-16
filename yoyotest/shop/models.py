@@ -33,7 +33,7 @@ class Customer(models.Model):
         return '%s, %s' % (self.last_name, self.first_name)
 
 
-class Voucher(ImmutableModel):
+class Voucher(models.Model):
     """
     Voucher is owned by Customer
     Vouchers can only be redeemed once but are transferable
@@ -43,9 +43,8 @@ class Voucher(ImmutableModel):
     date_created = models.DateTimeField(auto_now_add=True)
     date_redeemed = models.DateTimeField(null=True)
 
-    class ImmutableMeta:
-        immutable = ['date_created', 'date_redeemed']
-        quiet = False    
+    def __unicode__(self):
+        return '%d : %s' % (self.pk, self.date_redeemed)
 
 
 class Product(models.Model):

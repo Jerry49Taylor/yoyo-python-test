@@ -6,7 +6,7 @@ Created on 16 Feb 2015
 
 from rest_framework import serializers
 
-from models import Customer, Product, Transaction, TransactionLine
+from models import Customer, Product, Transaction, TransactionLine, Voucher
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -37,3 +37,10 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = ('id', 'customer', 'date_created', 'transactionlines')
         read_only_fields = ('id', 'date_created', 'transactionlines')
+
+
+class VoucherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voucher
+        fields = ('id', 'customer', 'date_created', 'date_redeemed')
+        read_only_fields = ('id', 'date_created')
