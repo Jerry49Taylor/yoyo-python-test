@@ -1,6 +1,14 @@
-from django.conf.urls import patterns, url
-from . import views 
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 
-urlpatterns = patterns('shop.views',
-    url(r'^get_stamp_count/(?P<customer_id>\d+)/$', views.get_stamp_count, name='get_stamp_count'),
-)
+from views import CustomerDetail, CustomerList, ProductDetail, ProductList
+
+
+urlpatterns = [
+    url(r'^customers/$', CustomerList.as_view()),
+    url(r'^customers/(?P<pk>[0-9]+)/$', CustomerDetail.as_view()),
+    url(r'^products/$', ProductList.as_view()),
+    url(r'^products/(?P<pk>[0-9]+)/$', ProductDetail.as_view()),
+]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

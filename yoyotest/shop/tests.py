@@ -93,24 +93,3 @@ class TestVouchers(TestCase):
     def test_no_voucher_to_redeem(self):
         c2 = Customer.objects.get(pk=2)
         self.assertFalse(c2.redeem_voucher())
-
-
-class TestGetStampCount(TestCase):
-    fixtures = ['customers.json', 'stamps.json']
-
-    def setUp(self):
-        TestCase.setUp(self)
-        self.user = User.objects.create_user(username='username', password='password', email='email')
-
-    def test_get(self):
-        self.maxDiff = None
-        self.client.login(username='username', password='password')
-        response = self.client.get(reverse('shop:get_stamp_count', kwargs={'customer_id':1}))
-        self.assertEqual(200, response.status_code)
-        result = json.loads(response.content)
-        self.assertDictEqual(dict(success=True, count=3), result)
-
-    def test_post(self):
-        self.client.login(username='username', password='password')
-        response = self.client.post(reverse('shop:get_stamp_count', kwargs={'customer_id':1}))
-        self.assertEqual(405, response.status_code)
