@@ -29,6 +29,9 @@ class Customer(models.Model):
     def unredeemed_vouchers(self):
         return Voucher.objects.filter(customer=self, date_redeemed__isnull=True).count()
 
+    def __unicode__(self):
+        return '%s, %s' % (self.last_name, self.first_name)
+
 
 class Voucher(ImmutableModel):
     """
@@ -53,8 +56,11 @@ class Product(models.Model):
     sku = models.CharField(max_length=100, unique=True, null=False)
     stamps_earned = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return '%s' % (self.sku)
 
-class Transaction(ImmutableModel):
+
+class Transaction(models.Model):
     """ 
     Simple Transaction and Transaction Line model
     Can be assigned to another customer intentionally
@@ -62,23 +68,18 @@ class Transaction(ImmutableModel):
     customer = models.ForeignKey(Customer, null=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
-    class ImmutableMeta:
-        immutable = ['date_created']
-        quiet = False  
+    def __unicode__(self):
+        return '%d : %s' % (self.pk, self.customer)
 
 
-class TransactionLine(ImmutableModel):
+class TransactionLine(models.Model):
     """
-    Immutable Each line on a transaction with unit and quantity
+    Each line on a transaction with unit and quantity
     Ignoring tax etc
     """
-    transaction = models.ForeignKey(Transaction, null=False, related_name='lines')
+    transaction = models.ForeignKey(Transaction, null=False, related_name='transactionlines')
     product = models.ForeignKey(Product, null=False)
     quantity = models.IntegerField(null=False)
-
-    class ImmutableMeta:
-        immutable = ['transaction', 'product', 'quantity']
-        quiet = False  
 
     def __unicode__(self):
         return '%d: %s' % (self.quantity, self.product.sku)

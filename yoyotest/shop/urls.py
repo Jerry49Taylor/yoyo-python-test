@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^products/(?P<pk>[0-9]+)/$', ProductDetail.as_view()),
     url(r'^transactions/$', TransactionList.as_view()),
     url(r'^transactions/(?P<pk>[0-9]+)/$', TransactionDetail.as_view()),
+    url(r'^transactionlines/$', TransactionLineList.as_view()),
+    url(r'^transactionlines/(?P<pk>[0-9]+)/$', TransactionLineDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

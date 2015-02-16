@@ -23,17 +23,17 @@ class ProductSerializer(serializers.ModelSerializer):
         read_only_fields = ('sku', 'stamps_earned')
 
 
-class TransactionSerializer(serializers.ModelSerializer):
-    transactionlines = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    
-    class Meta:
-        model = Transaction
-        fields = ('id', 'customer', 'date_created', 'transactionlines')
-        read_only_fields = ('customer', 'date_created')
-
-
 class TransactionLineSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionLine
-        fields = ('id', 'product', 'quantity')
-        read_only_fields = ('product', 'quantity')
+        fields = ('id', 'transaction', 'product', 'quantity')
+        read_only_fields = ('id')
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    transactionlines = TransactionLineSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Transaction
+        fields = ('id', 'customer', 'date_created', 'transactionlines')
+        read_only_fields = ('id', 'date_created', 'transactionlines')
