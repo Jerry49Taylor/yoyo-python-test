@@ -1,8 +1,4 @@
 
-import json
-
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from models import Customer, Product, Stamp, Transaction, TransactionLine, Voucher
@@ -44,7 +40,11 @@ class TestTransaction(TestCase):
         self.assertEqual(0, self.customer.balance)
         self.assertEqual(1, Voucher.objects.filter(customer=self.customer).count()-before)
 
+    def test__unicode__is_unicode(self):
+        transaction = Transaction.objects.create(customer=self.customer)
+        self.assertTrue(isinstance(transaction.__unicode__(), unicode))
 
+        
 class TestStamps(TestCase):
 
     fixtures = ['customers.json', 'products.json', 'transactions.json']
@@ -68,6 +68,11 @@ class TestStamps(TestCase):
         for x in range(0,10):
             Stamp.objects.create(customer=c1)
         self.assertEqual(1, Voucher.objects.filter(customer=c1).count()-before)
+
+    def test__unicode__is_unicode(self):
+        c1 = Customer.objects.get(pk=1)
+        stamp = Stamp.objects.create(customer=c1)
+        self.assertTrue(isinstance(stamp.__unicode__(), unicode))
 
 
 class TestVouchers(TestCase):
@@ -93,3 +98,8 @@ class TestVouchers(TestCase):
     def test_no_voucher_to_redeem(self):
         c2 = Customer.objects.get(pk=2)
         self.assertFalse(c2.redeem_voucher())
+
+    def test__unicode__is_unicode(self):
+        c1 = Customer.objects.get(pk=1)
+        voucher = Voucher.objects.create(customer=c1)
+        self.assertTrue(isinstance(voucher.__unicode__(), unicode))

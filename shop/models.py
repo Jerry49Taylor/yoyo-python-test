@@ -30,7 +30,7 @@ class Customer(models.Model):
         return Voucher.objects.filter(customer=self, date_redeemed__isnull=True).count()
 
     def __unicode__(self):
-        return '%s, %s' % (self.last_name, self.first_name)
+        return u'%s, %s' % (self.last_name, self.first_name)
 
 
 class Voucher(models.Model):
@@ -44,7 +44,7 @@ class Voucher(models.Model):
     date_redeemed = models.DateTimeField(null=True)
 
     def __unicode__(self):
-        return '%d : %s' % (self.pk, self.date_redeemed)
+        return u'%d : %s' % (self.pk, self.date_redeemed)
 
 
 class Product(models.Model):
@@ -56,7 +56,7 @@ class Product(models.Model):
     stamps_earned = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return '%s' % (self.sku)
+        return u'%s' % (self.sku)
 
 
 class Transaction(models.Model):
@@ -68,7 +68,7 @@ class Transaction(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return '%d : %s' % (self.pk, self.customer)
+        return u'%d : %s' % (self.pk, self.customer)
 
 
 class TransactionLine(models.Model):
@@ -81,7 +81,7 @@ class TransactionLine(models.Model):
     quantity = models.IntegerField(null=False)
 
     def __unicode__(self):
-        return '%d: %s' % (self.quantity, self.product.sku)
+        return u'%d: %s' % (self.quantity, self.product.sku)
 
 
 class Stamp(ImmutableModel):
@@ -99,6 +99,9 @@ class Stamp(ImmutableModel):
     class ImmutableMeta:
         immutable = ['date_created', 'transaction_line', 'voucher',]
         quiet = False
+
+    def __unicode__(self):
+        return u'%s : %s: %s' % (self.date_created, self.customer, self.voucher)
 
 
 @receiver(post_save, sender=Stamp)
