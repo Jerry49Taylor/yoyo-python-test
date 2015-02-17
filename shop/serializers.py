@@ -6,7 +6,7 @@ Created on 16 Feb 2015
 
 from rest_framework import serializers
 
-from models import Customer, Product, Transaction, TransactionLine, Voucher
+from models import Customer, Product, Transaction, TransactionLine, Stamp, Voucher
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -21,6 +21,13 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('id', 'sku', 'stamps_earned')
         read_only_fields = ('sku', 'stamps_earned')
+
+
+class StampSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stamp
+        fields = ('id', 'customer', 'date_created', 'voucher', 'transaction_line')
+        read_only_fields = ('id', 'date_created', 'voucher', 'transaction_line')
 
 
 class TransactionLineSerializer(serializers.ModelSerializer):
