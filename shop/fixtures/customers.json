@@ -14,7 +14,7 @@
       "first_name": "Paul",
       "last_name": "McCartney"
     }    
-  }
+  },
   {
     "model": "shop.customer",
     "pk": 3,

@@ -47,7 +47,7 @@ class TestTransaction(TestCase):
 
 class TestStamps(TestCase):
 
-    fixtures = ['transactions.json']
+    fixtures = ['customers.json', 'products.json', 'transactions.json']
 
     def test_show_how_many_stamps_a_customer_has(self):
         c1 = Customer.objects.get(pk=1)
@@ -72,7 +72,7 @@ class TestStamps(TestCase):
 
 class TestVouchers(TestCase):
 
-    fixtures = ['transactions.json']
+    fixtures = ['customers.json', 'products.json', 'transactions.json']
 
     def test_show_how_many_vouchers_a_customer_has(self):
         c1 = Customer.objects.get(pk=1)
