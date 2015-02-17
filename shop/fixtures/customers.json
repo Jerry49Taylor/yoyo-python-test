@@ -11,8 +11,16 @@
     "model": "shop.customer",
     "pk": 2,
     "fields": {
-      "first_name": "John",
-      "last_name": "Lennon"
+      "first_name": "Paul",
+      "last_name": "McCartney"
+    }    
+  }
+  {
+    "model": "shop.customer",
+    "pk": 3,
+    "fields": {
+      "first_name": "George",
+      "last_name": "Harrison"
     }    
   }
 ]
