@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from shop.models import Customer, Product, Stamp, Voucher
+from shop.models import Customer, Product, Stamp, Transaction, TransactionLine, Voucher
 
 
 # Register your models here.
@@ -25,5 +25,20 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('sku', 'stamps_earned')
     search_fields = ['sku',]
 
+
+class TransactionLineInline(admin.TabularInline):
+    model = TransactionLine
+    extra = 1
+
+
+class TransactionAdmin(admin.ModelAdmin):
+    inlines = [TransactionLineInline]
+
+
+class VoucherAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Transaction, TransactionAdmin)
+admin.site.register(Voucher, VoucherAdmin)
